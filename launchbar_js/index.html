@@ -9,7 +9,7 @@
 			padding:20px;
 		}
 
-		.launchbar{
+		#launchbar{
 			display: 			none;
 			box-sizing: 		border-box;
 			
@@ -23,7 +23,7 @@
 			border-radius: 		7px;
 			box-shadow: 		1px 1px 15px rgba(0,0,0,.2);
 		}
-		.launchbar input{
+		#launchbar input{
 			display: 			inline-block;
 			
 			width:  			100%;
@@ -36,12 +36,12 @@
 			border: 			none;
 			font-family: 		Consolas;	
 		}
-		.launchbar input::-moz-selection
+		#launchbar input::-moz-selection
 		{  
 			background: #f7931e; 
 			color: 		#000 ;
 		}
-		.launchbar input::selection
+		#launchbar input::selection
 		{  
 			background: #f7931e; 
 			color: 		#000 ;
@@ -50,7 +50,7 @@
 	</style>
 </head>
 <body>
-	<div class="launchbar">
+	<div id="launchbar">
 		<input type="text" name="tabtab" id="lb_tabtab">
 	</div>
 
@@ -70,10 +70,16 @@
 										}
 						  },
 
-			$launchbar 	= $('.launchbar'),
+			$launchbar 	= $('#launchbar'),
 			$tabtab 	= $('#lb_tabtab'),
 
+			cmd_list 	= [],
 			last_cmd 	= $tabtab.val();
+
+		$.each(LAUNCHBAR.commands, function(index, val) 
+		{
+			 cmd_list.push(index);
+		});
 
 		$(document).on('keyup', function(e)
 		{
@@ -87,16 +93,16 @@
 				{
 					case KEYS.TAB:
 					case KEYS.ENTER:
-						
-					if( LAUNCHBAR.commands[cmd] )
-					{
-						console.log(cmd, 'found!');
-						last_cmd = cmd + '';
-					}
-					else
-					{
-						alert( 'Sorry, command not found!' );
-					}
+							
+						if( LAUNCHBAR.commands[cmd] )
+						{
+							console.log(cmd, 'found!');
+							last_cmd = cmd + '';
+						}
+						else
+						{
+							alert( 'Sorry, command not found!' );
+						}
 
 					case KEYS.ESC:
 						$launchbar.fadeOut(100);
