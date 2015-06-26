@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Launchbar JS Test</title>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+	<style>
+		body {
+			padding:20px;
+		}
+
+		.launchbar{
+			display: 			none;
+			box-sizing: 		border-box;
+			
+			width: 				200px;
+			height: 			36px;
+			margin: 			0 auto;
+			padding: 			6.5px 15px 9px 8px;
+			
+			background: 		#333;
+			border: 			2px solid #DDD;
+			border-radius: 		7px;
+			box-shadow: 		1px 1px 15px rgba(0,0,0,.2);
+		}
+		.launchbar input{
+			display: 			inline-block;
+			
+			width:  			100%;
+			height:  			100%;
+			padding-left: 		6px;
+
+			border-radius: 		1px;
+			background: 		#999;
+			color: 				#EEE;
+			border: 			none;
+			font-family: 		Consolas;	
+		}
+		.launchbar input::-moz-selection
+		{  
+			background: #f7931e; 
+			color: 		#000 ;
+		}
+		.launchbar input::selection
+		{  
+			background: #f7931e; 
+			color: 		#000 ;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="launchbar">
+		<input type="text" name="tabtab" id="lb_tabtab">
+	</div>
+
+	<script src="//code.jquery.com/jquery-latest.min.js"></script>
+	<script>
+	jQuery(document).ready(function($) 
+	{
+		var KEYS 		= { SPACE: 32, TAB: 9, ENTER: 13, ESC: 27 },
+
+			LAUNCHBAR	= { 
+							commands: 	{ 
+											open: function(file)
+											{
+												console.log('jetzt wuereden wir oeffnen!', file);
+											},
+											o: 'open'
+										}
+						  },
+
+			$launchbar 	= $('.launchbar'),
+			$tabtab 	= $('#lb_tabtab'),
+
+			last_cmd 	= $tabtab.val();
+
+		$(document).on('keyup', function(e)
+		{
+			var cmd;
+
+			if($launchbar.is(':visible'))
+			{
+				cmd = $tabtab.val().toLowerCase();
+
+				switch(e.which)
+				{
+					case KEYS.TAB:
+					case KEYS.ENTER:
+						
+					if( LAUNCHBAR.commands[cmd] )
+					{
+						console.log(cmd, 'found!');
+						last_cmd = cmd + '';
+					}
+					else
+					{
+						alert( 'Sorry, command not found!' );
+					}
+
+					case KEYS.ESC:
+						$launchbar.fadeOut(100);
+						$tabtab.val( last_cmd );
+
+				}
+			}
+			else
+			{
+				if(e.which === KEYS.SPACE && e.ctrlKey)
+				{
+					$launchbar.fadeIn(100);
+					$tabtab.focus()[0].setSelectionRange(0, $tabtab[0].value.length);
+					return false;
+				}
+			}
+
+		});
+	});
+	</script>
+</body>
+</html>
