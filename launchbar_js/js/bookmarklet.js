@@ -1,12 +1,17 @@
-var srv  = {local:'http://localhost:8888/experiments/launchbar_js/', online: 'http://pjure-isobar.com/experiments/launchbar/'};
+var srv  = {local:'http://localhost:8888/experiments/launchbar_js/', online: 'http://tracking-isobar.com/dev/launchbar/'};
 
-window.LAUNCHBAR = { options: { mode: 'online' } };
+window.LAUNCHBAR = { options: { 	test: 		'hu',
+									shortcut: 	'ctrl + space'
+							  } 
+				   };
+
+//console.log('*** init by bookmarklet ***', window.LAUNCHBAR.options.shortcut);
 
 function init_bookmarklet() 
 {
 	getScript('//cdnjs.cloudflare.com/ajax/libs/webshim/1.15.7/dev/polyfiller.js', function() 
 	{
-		getScript(srv[mode] + 'js/launchbar_js.php', function(){});
+		getScript(srv[LAUNCHBAR.options.mode] + 'js/launchbar_js.php', function(){});
 	});
 };
 

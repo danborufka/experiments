@@ -35,14 +35,9 @@ var cmds_default = {
 					{
 						LAUNCHBAR.commands.open(file, true);
 					},
-					ftp: function(url)
-					{
-						LAUNCHBAR.commands.open('ftp://' + url, true);
-					},
 
 					o: 'open',
 					n: 'new'
-
 				},
 	labels: 	{	'open': 	'Open link in same window',
 					'new': 		'Open link in new tab',
